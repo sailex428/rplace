@@ -1,0 +1,4 @@
+name: rplace
+version: '${project.version}'
+main: me.sailex.rplace.RPlace
+api-version: '1.20'
