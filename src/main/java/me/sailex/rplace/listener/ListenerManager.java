@@ -4,12 +4,16 @@ import me.sailex.rplace.RPlace;
 
 public class ListenerManager {
 
-    private static final RPlace rPlace = RPlace.getInstance();
+    private final RPlace rPlace;
 
-    public static void manageListeners() {
-        rPlace.getServer().getPluginManager().registerEvents(new BlockEventListener(), rPlace);
-        rPlace.getServer().getPluginManager().registerEvents(new InventoryEventListener(), rPlace);
-        rPlace.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), rPlace);
+    public ListenerManager(RPlace rPlace) {
+        this.rPlace = rPlace;
+    }
+
+    public void manageListeners() {
+        rPlace.getServer().getPluginManager().registerEvents(new BlockEventListener(rPlace), rPlace);
+        rPlace.getServer().getPluginManager().registerEvents(new InventoryEventListener(rPlace), rPlace);
+        rPlace.getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(rPlace), rPlace);
     }
 
 }

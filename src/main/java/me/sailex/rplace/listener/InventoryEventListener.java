@@ -1,5 +1,6 @@
 package me.sailex.rplace.listener;
 
+import me.sailex.rplace.RPlace;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,13 +9,18 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 import net.kyori.adventure.text.format.NamedTextColor;
-
-import java.util.List;
-
-import static me.sailex.rplace.RPlace.getInstance;
 import static net.kyori.adventure.text.Component.text;
 
+import java.util.List;
+import java.util.Objects;
+
 public class InventoryEventListener implements Listener {
+
+    private final RPlace rPlace;
+
+    public InventoryEventListener(RPlace rPlace) {
+        this.rPlace = rPlace;
+    }
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent dropItemEvent) {
@@ -27,9 +33,9 @@ public class InventoryEventListener implements Listener {
 
     @EventHandler
     public void onItemClick(InventoryClickEvent clickEvent) {
-        List<String> allowedMaterials = getInstance().getMaterialsManager().getAllowedMaterials();
+        List<String> allowedMaterials = rPlace.getMaterialsManager().getAllowedMaterials();
 
-        Material material = clickEvent.getCursor().getType();
+        Material material = Objects.requireNonNull(clickEvent.getCurrentItem()).getType();
         if (!allowedMaterials.contains(material.name())) {
             clickEvent.setCancelled(true);
         }

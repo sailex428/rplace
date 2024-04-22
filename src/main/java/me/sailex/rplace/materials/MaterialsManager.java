@@ -10,10 +10,10 @@ public class MaterialsManager {
 
     private List<String> allowedMaterials;
 
-    public MaterialsManager() {
-        Logger LOGGER = RPlace.getInstance().getLogger();
+    public MaterialsManager(RPlace rPlace) {
+        Logger LOGGER = rPlace.getLogger();
         try {
-            allowedMaterials = RPlace.getInstance().getConfig().getStringList("allowedBlocks");
+            allowedMaterials = rPlace.getConfig().getStringList("allowedBlocks");
             LOGGER.info("Loaded allowedBlocks List from config.yml successfully!");
         } catch (ClassCastException e) {
             LOGGER.warning("Could not load allowed Block List from config.yml!");
