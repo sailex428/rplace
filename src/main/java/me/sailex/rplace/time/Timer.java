@@ -2,14 +2,11 @@ package me.sailex.rplace.time;
 
 import me.sailex.rplace.RPlace;
 import me.sailex.rplace.scoreboard.ScoreBoard;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
+
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.TimeUnit;
-
-import static net.kyori.adventure.text.Component.text;
 
 public class Timer {
 
