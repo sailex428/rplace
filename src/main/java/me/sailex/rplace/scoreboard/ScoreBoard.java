@@ -17,10 +17,10 @@ public class ScoreBoard {
 
     private Scoreboard scoreboard;
     private final Objective objective;
-    private int playedTime;
+    private String playedTime;
     private int placedBlocks;
 
-    public ScoreBoard(Player player, int playedTime, int placedBlocks) {
+    public ScoreBoard(Player player, String playedTime, int placedBlocks) {
         this.placedBlocks = placedBlocks;
         this.playedTime = playedTime;
 
@@ -43,13 +43,15 @@ public class ScoreBoard {
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        setScore("§6" + "----------------", 3);
+        setScore("§6" + "-------------------", 3);
 
-        setScore("Time played: " + "§6" + playedTime, 2);
+        //setScore("Time played: " + "§6" + this.playedTime, 2);
+        setPlayedTime(playedTime);
 
-        setScore("Blocks placed: " + "§6" + placedBlocks, 1);
+        //setScore("Blocks placed: " + "§6" + placedBlocks, 1);
+        setPlacedBlocks(placedBlocks);
 
-        setScore("§6" + "---------------- ", 0);
+        setScore("§6" + "------------------- ", 0);
 
         player.setScoreboard(scoreboard);
     }
@@ -106,11 +108,8 @@ public class ScoreBoard {
         objective.getScore(name.getEntryName()).setScore(score);
     }
 
-    public int getPlayedTime() {
-        return playedTime;
-    }
-
-    public void setPlayedTime(int playedTime) {
+    public void setPlayedTime(String playedTime) {
+        setScore("Time played: " + "§6" + this.playedTime, 2);
         this.playedTime = playedTime;
     }
 
@@ -119,7 +118,7 @@ public class ScoreBoard {
     }
 
     public void setPlacedBlocks(int placedBlocks) {
-        setScore("Blocks placed: " + "§6" + placedBlocks, 1);
+        setScore("Blocks placed: " + "§6" + this.placedBlocks, 1);
         this.placedBlocks = placedBlocks;
     }
 

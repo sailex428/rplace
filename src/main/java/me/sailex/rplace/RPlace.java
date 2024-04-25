@@ -3,8 +3,10 @@ package me.sailex.rplace;
 import me.sailex.rplace.listener.ListenerManager;
 
 import me.sailex.rplace.materials.MaterialsManager;
+import me.sailex.rplace.player.RPlacePlayer;
 import me.sailex.rplace.player.RPlacePlayerBuilder;
 import me.sailex.rplace.scoreboard.ScoreBoardManager;
+import me.sailex.rplace.time.TimerManager;
 import org.bukkit.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,20 +15,29 @@ public final class RPlace extends JavaPlugin {
     private MaterialsManager materialsManager;
     private RPlacePlayerBuilder rPlacePlayerBuilder;
 
+    private ScoreBoardManager scoreBoardManager;
+
     @Override
     public void onEnable() {
         RPlace instance = this;
         setupWorld();
 
         materialsManager = new MaterialsManager(instance);
-        rPlacePlayerBuilder = new RPlacePlayerBuilder(instance, new ScoreBoardManager());
+        scoreBoardManager = new ScoreBoardManager();
+        rPlacePlayerBuilder = new RPlacePlayerBuilder(
+                instance,
+                scoreBoardManager,
+                new TimerManager(instance)
+        );
 
         new ListenerManager(instance).manageListeners();
     }
 
     @Override
     public void onDisable() {
-
+        for(RPlacePlayer rPlacePlayer : rPlacePlayerBuilder.getrPlacePlayers()) {
+            rPlacePlayerBuilder.savePlayerData(rPlacePlayer);
+        }
     }
 
     public void setupWorld() {
@@ -41,11 +52,16 @@ public final class RPlace extends JavaPlugin {
         }
     }
 
+    public RPlacePlayerBuilder getrPlacePlayerBuilder() {
+        return rPlacePlayerBuilder;
+    }
+
     public MaterialsManager getMaterialsManager() {
         return materialsManager;
     }
 
-    public RPlacePlayerBuilder getrPlacePlayerBuilder() {
-        return rPlacePlayerBuilder;
+    public ScoreBoardManager getScoreBoardManager() {
+        return scoreBoardManager;
     }
+
 }

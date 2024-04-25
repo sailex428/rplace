@@ -4,7 +4,8 @@ import me.sailex.rplace.RPlace;
 import me.sailex.rplace.config.ConfigLoader;
 import me.sailex.rplace.scoreboard.ScoreBoardManager;
 import me.sailex.rplace.time.Countdown;
-import me.sailex.rplace.time.Timer;
+import me.sailex.rplace.time.TimerManager;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -18,13 +19,17 @@ public class RPlacePlayerBuilder {
 
     private final RPlace rPlace;
     private final ScoreBoardManager scoreBoardManager;
+    private final TimerManager timerManager;
     private final List<RPlacePlayer> rPlacePlayers;
     private final ConfigLoader configLoader;
     private final FileConfiguration config;
+    private final String PLACED_BLOCKS = "placedBlocks";
+    private final String PLAYED_TIME = "playedTime";
 
-    public RPlacePlayerBuilder(RPlace rPlace, ScoreBoardManager scoreBoardManager) {
+    public RPlacePlayerBuilder(RPlace rPlace, ScoreBoardManager scoreBoardManager, TimerManager timerManager) {
         this.rPlace = rPlace;
         this.scoreBoardManager = scoreBoardManager;
+        this.timerManager = timerManager;
         rPlacePlayers = new ArrayList<>();
         configLoader = new ConfigLoader("player_data.yml", rPlace);
         config = configLoader.getFileConfiguration();
@@ -35,9 +40,9 @@ public class RPlacePlayerBuilder {
 
         RPlacePlayer rPlacePlayer = new RPlacePlayer(
                 player,
-                scoreBoardManager.getScoreboard(player, playerData.get("playedTime"), playerData.get("placedBlocks")),
+                scoreBoardManager.getScoreboard(player, "0s", playerData.get(PLACED_BLOCKS)),
                 new Countdown(rPlace, player, 10),
-                new Timer(player, playerData.get("playedTime"))
+                timerManager.getTimer(player, playerData.get(PLAYED_TIME))
         );
         rPlacePlayers.add(rPlacePlayer);
     }
@@ -49,11 +54,11 @@ public class RPlacePlayerBuilder {
         int placedBlocks = 0;
 
         if (config.getString(uuid) != null) {
-            playedTime = config.getInt(uuid + ".playedTime");
-            placedBlocks = config.getInt(uuid + ".placedBlocks");
+            playedTime = config.getInt(uuid + "." + PLAYED_TIME);
+            placedBlocks = config.getInt(uuid + "." + PLACED_BLOCKS);
         }
-        playerDataMap.put("playedTime", playedTime);
-        playerDataMap.put("placedBlocks", placedBlocks);
+        playerDataMap.put(PLAYED_TIME, playedTime);
+        playerDataMap.put(PLACED_BLOCKS, placedBlocks);
         return playerDataMap;
     }
 
@@ -61,8 +66,8 @@ public class RPlacePlayerBuilder {
         String uuid = placePlayer.getPlayer().getUniqueId().toString();
         Map<String, Integer> playerDataMap = new HashMap<>();
 
-        playerDataMap.put("playedTime", placePlayer.getTimer().getTime());
-        playerDataMap.put("placedBlocks", placePlayer.getScoreBoard().getPlacedBlocks());
+        playerDataMap.put(PLAYED_TIME, placePlayer.getTimer().getTime());
+        playerDataMap.put(PLACED_BLOCKS, placePlayer.getScoreBoard().getPlacedBlocks());
 
         config.set(uuid, playerDataMap);
         try {

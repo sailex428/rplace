@@ -8,22 +8,23 @@ import java.util.Map;
 
 public class TimerManager {
 
-    private RPlace rPlace;
-    private Map<String, Timer> timerMap;
+    private final RPlace rPlace;
+    private final Map<String, Timer> timerMap;
 
     public TimerManager(RPlace rPlace) {
         this.rPlace = rPlace;
         this.timerMap = new HashMap<>();
     }
 
-    public Timer getTimer(Player player) {
+    public Timer getTimer(Player player, int playedTime) {
+        String uuid = player.getUniqueId().toString();
 
-
-        return new Timer(player, 0);
-    }
-
-    public Map<String, Timer> getTimerMap() {
-        return timerMap;
+        if (timerMap.containsKey(uuid)) {
+            return timerMap.get(uuid);
+        }
+        Timer timer = new Timer(rPlace, player, playedTime);
+        timerMap.put(uuid, timer);
+        return timer;
     }
 
 }
