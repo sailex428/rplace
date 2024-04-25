@@ -17,10 +17,10 @@ public class ScoreBoard {
 
     private Scoreboard scoreboard;
     private final Objective objective;
-    private String playedTime;
+    private int playedTime;
     private int placedBlocks;
 
-    public ScoreBoard(Player player, String playedTime, int placedBlocks) {
+    public ScoreBoard(Player player, int playedTime, int placedBlocks) {
         this.placedBlocks = placedBlocks;
         this.playedTime = playedTime;
 
@@ -106,11 +106,11 @@ public class ScoreBoard {
         objective.getScore(name.getEntryName()).setScore(score);
     }
 
-    public String getPlayedTime() {
+    public int getPlayedTime() {
         return playedTime;
     }
 
-    public void setPlayedTime(String playedTime) {
+    public void setPlayedTime(int playedTime) {
         this.playedTime = playedTime;
     }
 

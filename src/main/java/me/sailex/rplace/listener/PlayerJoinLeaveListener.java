@@ -1,6 +1,8 @@
 package me.sailex.rplace.listener;
 
 import me.sailex.rplace.RPlace;
+import me.sailex.rplace.player.RPlacePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,12 +18,17 @@ public class PlayerJoinLeaveListener implements Listener {
 
     @EventHandler
     public void onPlayerJoinListener(PlayerJoinEvent joinEvent) {
-        rPlace.getScoreBoardManager().getScoreboard(joinEvent.getPlayer());
+        rPlace.getrPlacePlayerBuilder().buildPlayer(joinEvent.getPlayer());
     }
 
     @EventHandler
     public void onPlayerLeaveListener(PlayerQuitEvent event) {
-        rPlace.getScoreBoardManager().saveScoreBoardOfPlayer(event.getPlayer());
+        Player player = event.getPlayer();
+        for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getrPlacePlayers()) {
+            if (player.equals(placePlayer.getPlayer())) {
+                rPlace.getrPlacePlayerBuilder().savePlayerData(placePlayer);
+            }
+        }
     }
 
 }

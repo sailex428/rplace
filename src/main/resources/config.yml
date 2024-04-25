@@ -2,6 +2,7 @@
 
 # all allowed Blocks to place
 allowedBlocks:
+- MYCELIUM
 - STONE
 - GRANITE
 - POLISHED_GRANITE

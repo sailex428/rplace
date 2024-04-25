@@ -1,6 +1,7 @@
 package me.sailex.rplace.config;
 
 import me.sailex.rplace.RPlace;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

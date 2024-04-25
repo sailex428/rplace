@@ -2,6 +2,7 @@ package me.sailex.rplace.listener;
 
 import me.sailex.rplace.RPlace;
 
+import me.sailex.rplace.player.RPlacePlayer;
 import me.sailex.rplace.scoreboard.ScoreBoard;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -38,9 +39,27 @@ public class BlockEventListener implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent blockPlaceEvent) {
         blockPlaceEvent.setCancelled(true);
+        Player player = blockPlaceEvent.getPlayer();
+        RPlacePlayer currentPlacePlayer = null;
+        for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getrPlacePlayers()) {
+            if (player.equals(placePlayer.getPlayer())) {
+                currentPlacePlayer = placePlayer;
+                if (placePlayer.getCountdown().getTime() > 0) {
+                    return;
+                }
+            }
+        }
 
         Block blockAgainst = blockPlaceEvent.getBlockAgainst();
         Material newBlockMaterial =  blockPlaceEvent.getBlock().getType();
+
+        if (newBlockMaterial.equals(blockAgainst.getType())) {
+                blockPlaceEvent.getPlayer().sendActionBar(
+                        text().content("This type of block is already placed here!")
+                                .color(NamedTextColor.RED)
+                );
+                return;
+        }
 
         List<String> allowedMaterials = rPlace.getMaterialsManager().getAllowedMaterials();
 
@@ -51,9 +70,11 @@ public class BlockEventListener implements Listener {
         if (allowedMaterials.contains(newBlockMaterial.name())) {
             blockAgainst.setType(newBlockMaterial);
 
-            Player player = blockPlaceEvent.getPlayer();
-            ScoreBoard scoreBoard = rPlace.getScoreBoardManager().getScoreBoardMap().get(player.getUniqueId().toString());
-            scoreBoard.setPlacedBlocks(scoreBoard.getPlacedBlocks() + 1);
+            if (currentPlacePlayer != null) {
+                ScoreBoard scoreBoard = currentPlacePlayer.getScoreBoard();
+                scoreBoard.setPlacedBlocks(scoreBoard.getPlacedBlocks() + 1);
+                currentPlacePlayer.getCountdown().setTime(10);
+            }
             return;
         }
         blockPlaceEvent.getPlayer().sendActionBar(
