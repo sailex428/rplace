@@ -36,7 +36,7 @@ public class Timer {
     }
 
     private void sendTimerToScoreBoard() {
-        ScoreBoard scoreBoard = rPlace.getScoreBoardManager().getScoreBoardMap().get(player.getUniqueId().toString());
+        ScoreBoard scoreBoard = rPlace.getScoreBoardManager().getScoreBoardMap().get(player.getUniqueId());
         scoreBoard.setPlayedTime(formatTime(time));
     }
 

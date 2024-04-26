@@ -8,6 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.List;
+
 public class PlayerJoinLeaveListener implements Listener {
 
     private final RPlace rPlace;
@@ -24,9 +26,12 @@ public class PlayerJoinLeaveListener implements Listener {
     @EventHandler
     public void onPlayerLeaveListener(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getrPlacePlayers()) {
+        List<RPlacePlayer> placePlayers = rPlace.getrPlacePlayerBuilder().getRPlacePlayers();
+        for (RPlacePlayer placePlayer : placePlayers) {
             if (player.equals(placePlayer.getPlayer())) {
                 rPlace.getrPlacePlayerBuilder().savePlayerData(placePlayer);
+                placePlayers.remove(placePlayer);
+                return;
             }
         }
     }

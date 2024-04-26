@@ -5,11 +5,12 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class TimerManager {
 
     private final RPlace rPlace;
-    private final Map<String, Timer> timerMap;
+    private final Map<UUID, Timer> timerMap;
 
     public TimerManager(RPlace rPlace) {
         this.rPlace = rPlace;
@@ -17,10 +18,12 @@ public class TimerManager {
     }
 
     public Timer getTimer(Player player, int playedTime) {
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
 
         if (timerMap.containsKey(uuid)) {
-            return timerMap.get(uuid);
+            Timer timer = timerMap.get(uuid);
+            timer.runTimer();
+            return timer;
         }
         Timer timer = new Timer(rPlace, player, playedTime);
         timerMap.put(uuid, timer);

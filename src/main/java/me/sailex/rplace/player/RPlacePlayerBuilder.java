@@ -4,8 +4,8 @@ import me.sailex.rplace.RPlace;
 import me.sailex.rplace.config.ConfigLoader;
 import me.sailex.rplace.scoreboard.ScoreBoardManager;
 import me.sailex.rplace.time.Countdown;
-import me.sailex.rplace.time.TimerManager;
 
+import me.sailex.rplace.time.TimerManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -36,14 +36,6 @@ public class RPlacePlayerBuilder {
     }
 
     public void buildPlayer(Player player) {
-        for (RPlacePlayer placePlayer : rPlacePlayers) {
-            if (placePlayer.getPlayer().getUniqueId().toString().equals(player.getUniqueId().toString())) {
-                placePlayer.getScoreBoard().setup();
-                placePlayer.getCountdown().runCountDown(5);
-                placePlayer.getTimer().runTimer();
-                return;
-            }
-        }
         Map<String, Integer> playerData = getPlayerData(player);
 
         RPlacePlayer rPlacePlayer = new RPlacePlayer(
@@ -85,7 +77,7 @@ public class RPlacePlayerBuilder {
         }
     }
 
-    public List<RPlacePlayer> getrPlacePlayers() {
+    public List<RPlacePlayer> getRPlacePlayers() {
         return rPlacePlayers;
     }
 }

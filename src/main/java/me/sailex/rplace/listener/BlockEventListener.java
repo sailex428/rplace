@@ -29,6 +29,9 @@ public class BlockEventListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent blockBreakEvent) {
+        if (blockBreakEvent.getPlayer().isOp()) {
+            return;
+        }
         blockBreakEvent.setCancelled(true);
         blockBreakEvent.getPlayer().sendActionBar(
                 text().content("You cannot break blocks here!")
@@ -38,10 +41,13 @@ public class BlockEventListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent blockPlaceEvent) {
+        if (blockPlaceEvent.getPlayer().isOp()) {
+            return;
+        }
         blockPlaceEvent.setCancelled(true);
         Player player = blockPlaceEvent.getPlayer();
         RPlacePlayer currentPlacePlayer = null;
-        for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getrPlacePlayers()) {
+        for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getRPlacePlayers()) {
             if (player.equals(placePlayer.getPlayer())) {
                 currentPlacePlayer = placePlayer;
                 if (placePlayer.getCountdown().getTime() > 0) {

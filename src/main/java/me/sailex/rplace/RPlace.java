@@ -35,7 +35,7 @@ public final class RPlace extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for(RPlacePlayer rPlacePlayer : rPlacePlayerBuilder.getrPlacePlayers()) {
+        for(RPlacePlayer rPlacePlayer : rPlacePlayerBuilder.getRPlacePlayers()) {
             rPlacePlayerBuilder.savePlayerData(rPlacePlayer);
         }
     }
