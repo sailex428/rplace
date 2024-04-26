@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 public class RPlacePlayer {
 
     private Player player;
-    private ScoreBoard scoreBoard;
+    private final ScoreBoard scoreBoard;
     private final Countdown countdown;
-    private Timer timer;
+    private final Timer timer;
 
     public RPlacePlayer(Player player, ScoreBoard scoreBoard, Countdown countdown, Timer timer) {
         this.player = player;
@@ -31,20 +31,12 @@ public class RPlacePlayer {
         return scoreBoard;
     }
 
-    public void setScoreBoard(ScoreBoard scoreBoard) {
-        this.scoreBoard = scoreBoard;
-    }
-
     public Countdown getCountdown() {
         return countdown;
     }
 
     public Timer getTimer() {
         return timer;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
     }
 
 }

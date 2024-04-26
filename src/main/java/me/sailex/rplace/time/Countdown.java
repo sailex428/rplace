@@ -16,19 +16,19 @@ public class Countdown {
     private final Player player;
     private int time;
 
-    public Countdown(RPlace rPlace, Player player, int time) {
+    public Countdown(RPlace rPlace, Player player) {
         this.rPlace = rPlace;
         this.player = player;
-        this.time = time;
-        runCountDown();
+        runCountDown(5);
     }
 
-    private void runCountDown() {
+    public void runCountDown(int newTime) {
+        this.time = newTime;
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
                 if (!player.isOnline()) {
-                    cancel();
+                    return;
                 }
                 sendTimerToActionBar();
                 if (time > 0) {

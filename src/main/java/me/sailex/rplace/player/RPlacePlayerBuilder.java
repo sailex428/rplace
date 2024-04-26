@@ -36,12 +36,20 @@ public class RPlacePlayerBuilder {
     }
 
     public void buildPlayer(Player player) {
+        for (RPlacePlayer placePlayer : rPlacePlayers) {
+            if (placePlayer.getPlayer().getUniqueId().toString().equals(player.getUniqueId().toString())) {
+                placePlayer.getScoreBoard().setup();
+                placePlayer.getCountdown().runCountDown(5);
+                placePlayer.getTimer().runTimer();
+                return;
+            }
+        }
         Map<String, Integer> playerData = getPlayerData(player);
 
         RPlacePlayer rPlacePlayer = new RPlacePlayer(
                 player,
                 scoreBoardManager.getScoreboard(player, "0s", playerData.get(PLACED_BLOCKS)),
-                new Countdown(rPlace, player, 10),
+                new Countdown(rPlace, player),
                 timerManager.getTimer(player, playerData.get(PLAYED_TIME))
         );
         rPlacePlayers.add(rPlacePlayer);

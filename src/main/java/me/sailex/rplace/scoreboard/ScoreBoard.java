@@ -13,14 +13,19 @@ import static net.kyori.adventure.text.Component.text;
 public class ScoreBoard {
 
     private Scoreboard scoreboard;
-    private final Objective objective;
+    private final Player player;
+    private Objective objective;
     private String playedTime;
     private int placedBlocks;
 
     public ScoreBoard(Player player, String playedTime, int placedBlocks) {
+        this.player = player;
         this.placedBlocks = placedBlocks;
         this.playedTime = playedTime;
+        setup();
+    }
 
+    public void setup() {
         if (player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
             this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         }
@@ -104,17 +109,17 @@ public class ScoreBoard {
     }
 
     public void setPlayedTime(String playedTime) {
-        setScore("Time played: " + "§6" + this.playedTime, 2);
+        setScore("Time played: " + "§6" + playedTime, 2);
         this.playedTime = playedTime;
+    }
+
+    public void setPlacedBlocks(int placedBlocks) {
+        setScore("Blocks placed: " + "§6" + placedBlocks, 1);
+        this.placedBlocks = placedBlocks;
     }
 
     public int getPlacedBlocks() {
         return placedBlocks;
-    }
-
-    public void setPlacedBlocks(int placedBlocks) {
-        setScore("Blocks placed: " + "§6" + this.placedBlocks, 1);
-        this.placedBlocks = placedBlocks;
     }
 
 }

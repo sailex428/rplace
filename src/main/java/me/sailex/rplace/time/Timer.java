@@ -21,12 +21,12 @@ public class Timer {
         runTimer();
     }
 
-    private void runTimer() {
+    public void runTimer() {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
                 if (!player.isOnline()) {
-                    return;
+                    cancel();
                 }
                 sendTimerToScoreBoard();
                 time++;
