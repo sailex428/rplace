@@ -4,10 +4,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.*;
 
 import java.util.Objects;
 
@@ -35,7 +32,7 @@ public class ScoreBoard {
         }
 
         String title = "r/place";
-        objective = this.scoreboard.registerNewObjective("display", "dummy", title);
+        objective = this.scoreboard.registerNewObjective("display", Criteria.DUMMY, text().content(title).build());
 
         objective.displayName(text().content("§6§l" + title)
                 .color(NamedTextColor.GOLD)
@@ -45,10 +42,8 @@ public class ScoreBoard {
 
         setScore("§6" + "-------------------", 3);
 
-        //setScore("Time played: " + "§6" + this.playedTime, 2);
         setPlayedTime(playedTime);
 
-        //setScore("Blocks placed: " + "§6" + placedBlocks, 1);
         setPlacedBlocks(placedBlocks);
 
         setScore("§6" + "------------------- ", 0);
