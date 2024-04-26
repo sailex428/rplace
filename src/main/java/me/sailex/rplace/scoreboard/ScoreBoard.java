@@ -45,13 +45,19 @@ public class ScoreBoard {
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        setScore("§6" + "-------------------", 3);
+        setScore("§6" + "-------------", 6);
+
+        setScore("Time played:", 5);
 
         setPlayedTime(playedTime);
 
+        setScore("§6" + "-------------", 3);
+
+        setScore("Blocks placed:", 2);
+
         setPlacedBlocks(placedBlocks);
 
-        setScore("§6" + "------------------- ", 0);
+        setScore("§6" + "-------------", 0);
 
         player.setScoreboard(scoreboard);
     }
@@ -109,12 +115,12 @@ public class ScoreBoard {
     }
 
     public void setPlayedTime(String playedTime) {
-        setScore("Time played: " + "§6" + playedTime, 2);
+        setScore("§6" + playedTime, 4);
         this.playedTime = playedTime;
     }
 
     public void setPlacedBlocks(int placedBlocks) {
-        setScore("Blocks placed: " + "§6" + placedBlocks, 1);
+        setScore("§6" + placedBlocks, 1);
         this.placedBlocks = placedBlocks;
     }
 
