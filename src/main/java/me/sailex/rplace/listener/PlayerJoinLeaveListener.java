@@ -2,6 +2,7 @@ package me.sailex.rplace.listener;
 
 import me.sailex.rplace.RPlace;
 import me.sailex.rplace.player.RPlacePlayer;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.List;
+
+import static net.kyori.adventure.text.Component.text;
 
 public class PlayerJoinLeaveListener implements Listener {
 
@@ -20,6 +23,9 @@ public class PlayerJoinLeaveListener implements Listener {
 
     @EventHandler
     public void onPlayerJoinListener(PlayerJoinEvent joinEvent) {
+        joinEvent.getPlayer().sendMessage(text().content(
+                "Welcome to our r/place-inspired Minecraft server! ").color(NamedTextColor.GOLD)
+        );
         rPlace.getrPlacePlayerBuilder().buildPlayer(joinEvent.getPlayer());
     }
 

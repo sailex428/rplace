@@ -7,30 +7,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import static net.kyori.adventure.text.Component.text;
 
 public class ScoreBoard {
 
     private Scoreboard scoreboard;
-    private final Player player;
     private Objective objective;
     private String playedTime;
     private int placedBlocks;
 
     public ScoreBoard(Player player, String playedTime, int placedBlocks) {
-        this.player = player;
         this.placedBlocks = placedBlocks;
         this.playedTime = playedTime;
-        setup();
+        setup(player.getUniqueId());
     }
 
-    public void setup() {
-        if (player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
-            this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+    public void setup(UUID uuid) {
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) {
+            return;
         }
-
-        this.scoreboard = player.getScoreboard();
+        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
         if (this.scoreboard.getObjective("display") != null) {
             Objects.requireNonNull(this.scoreboard.getObjective("display")).unregister();

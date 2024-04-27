@@ -19,7 +19,7 @@ public class ScoreBoardManager {
 
         if (scoreBoardMap.containsKey(uuid)) {
             ScoreBoard scoreBoard = scoreBoardMap.get(uuid);
-            scoreBoard.setup();
+            scoreBoard.setup(uuid);
             return scoreBoard;
         }
         ScoreBoard scoreBoard = new ScoreBoard(player, playedTime, placedBlocks);
