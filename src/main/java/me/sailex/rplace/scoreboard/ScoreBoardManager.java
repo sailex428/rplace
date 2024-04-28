@@ -1,5 +1,6 @@
 package me.sailex.rplace.scoreboard;
 
+import me.sailex.rplace.config.LeaderBoard;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class ScoreBoardManager {
         scoreBoardMap = new HashMap<>();
     }
 
-    public ScoreBoard getScoreboard(Player player, String playedTime, int placedBlocks) {
+    public ScoreBoard getScoreboard(Player player, String playedTime, int placedBlocks, LeaderBoard leaderBoard) {
         UUID uuid = player.getUniqueId();
 
         if (scoreBoardMap.containsKey(uuid)) {
@@ -22,7 +23,7 @@ public class ScoreBoardManager {
             scoreBoard.setup(uuid);
             return scoreBoard;
         }
-        ScoreBoard scoreBoard = new ScoreBoard(player, playedTime, placedBlocks);
+        ScoreBoard scoreBoard = new ScoreBoard(player, playedTime, placedBlocks, leaderBoard);
         scoreBoardMap.put(player.getUniqueId(), scoreBoard);
         return scoreBoard;
     }

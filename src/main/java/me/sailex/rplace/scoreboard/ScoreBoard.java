@@ -1,5 +1,6 @@
 package me.sailex.rplace.scoreboard;
 
+import me.sailex.rplace.config.LeaderBoard;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -14,13 +15,15 @@ import static net.kyori.adventure.text.Component.text;
 public class ScoreBoard {
 
     private Scoreboard scoreboard;
+    private LeaderBoard leaderBoard;
     private Objective objective;
     private String playedTime;
     private int placedBlocks;
 
-    public ScoreBoard(Player player, String playedTime, int placedBlocks) {
+    public ScoreBoard(Player player, String playedTime, int placedBlocks, LeaderBoard leaderBoard) {
         this.placedBlocks = placedBlocks;
         this.playedTime = playedTime;
+        this.leaderBoard = leaderBoard;
         setup(player.getUniqueId());
     }
 
@@ -44,19 +47,27 @@ public class ScoreBoard {
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        setScore("§6" + "-------------", 6);
+        setLine(10);
 
-        setScore("Time played:", 5);
+        setScore("Time played:", 9);
 
         setPlayedTime(playedTime);
 
-        setScore("§6" + "-------------", 3);
+        setLine(7);
 
-        setScore("Blocks placed:", 2);
+        setScore("Blocks placed:", 6);
 
         setPlacedBlocks(placedBlocks);
 
-        setScore("§6" + "-------------", 0);
+        setLine(4);
+
+        setScore("Leaderboard:", 3);
+
+        setScore("1. ", 2);
+
+        setScore("2. ", 1);
+
+        setScore("3. ", 0);
 
         player.setScoreboard(scoreboard);
     }
@@ -114,13 +125,17 @@ public class ScoreBoard {
     }
 
     public void setPlayedTime(String playedTime) {
-        setScore("§6" + playedTime, 4);
+        setScore("§6" + playedTime, 8);
         this.playedTime = playedTime;
     }
 
     public void setPlacedBlocks(int placedBlocks) {
-        setScore("§6" + placedBlocks, 1);
+        setScore("§6" + placedBlocks, 5);
         this.placedBlocks = placedBlocks;
+    }
+
+    private void setLine(int score) {
+        setScore("§6" + "-------------", score);
     }
 
     public int getPlacedBlocks() {

@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class BlockEventListener implements Listener {
             if (currentPlacePlayer != null) {
                 ScoreBoard scoreBoard = currentPlacePlayer.getScoreBoard();
                 scoreBoard.setPlacedBlocks(scoreBoard.getPlacedBlocks() + 1);
-                currentPlacePlayer.getCountdown().setTime(10);
+                currentPlacePlayer.getCountdown().setTime(5);
             }
             return;
         }
@@ -88,6 +89,11 @@ public class BlockEventListener implements Listener {
                         .color(NamedTextColor.RED)
         );
 
+    }
+
+    @EventHandler
+    public void onExplodeEvent(EntityExplodeEvent explodeEvent) {
+        explodeEvent.setCancelled(true);
     }
 
 }

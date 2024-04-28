@@ -2,6 +2,7 @@
 
 # all allowed Blocks to place
 allowedBlocks:
+- BEDROCK
 - AIR
 - MYCELIUM
 - STONE
