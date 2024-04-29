@@ -51,7 +51,7 @@ public class BlockEventListener implements Listener {
         for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getRPlacePlayers()) {
             if (player.equals(placePlayer.getPlayer())) {
                 currentPlacePlayer = placePlayer;
-                if (placePlayer.getCountdown().getTime() > 0) {
+                if (placePlayer.getCountdown().getTime() >= 0) {
                     return;
                 }
             }
@@ -80,7 +80,7 @@ public class BlockEventListener implements Listener {
             if (currentPlacePlayer != null) {
                 ScoreBoard scoreBoard = currentPlacePlayer.getScoreBoard();
                 scoreBoard.setupPlacedBlocks(scoreBoard.getPlacedBlocks() + 1);
-                currentPlacePlayer.getCountdown().setTime(5);
+                currentPlacePlayer.getCountdown().setTime(4);
             }
             return;
         }
