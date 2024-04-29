@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.List;
-
 import static net.kyori.adventure.text.Component.text;
 
 public class PlayerJoinLeaveListener implements Listener {
@@ -32,11 +30,10 @@ public class PlayerJoinLeaveListener implements Listener {
     @EventHandler
     public void onPlayerLeaveListener(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        List<RPlacePlayer> placePlayers = rPlace.getrPlacePlayerBuilder().getRPlacePlayers();
-        for (RPlacePlayer placePlayer : placePlayers) {
+        for (RPlacePlayer placePlayer : rPlace.getrPlacePlayerBuilder().getRPlacePlayers()) {
             if (player.equals(placePlayer.getPlayer())) {
                 rPlace.getrPlacePlayerBuilder().savePlayerData(placePlayer);
-                placePlayers.remove(placePlayer);
+                rPlace.getrPlacePlayerBuilder().getRPlacePlayers().remove(placePlayer);
                 return;
             }
         }

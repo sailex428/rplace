@@ -79,7 +79,7 @@ public class BlockEventListener implements Listener {
 
             if (currentPlacePlayer != null) {
                 ScoreBoard scoreBoard = currentPlacePlayer.getScoreBoard();
-                scoreBoard.setPlacedBlocks(scoreBoard.getPlacedBlocks() + 1);
+                scoreBoard.setupPlacedBlocks(scoreBoard.getPlacedBlocks() + 1);
                 currentPlacePlayer.getCountdown().setTime(5);
             }
             return;

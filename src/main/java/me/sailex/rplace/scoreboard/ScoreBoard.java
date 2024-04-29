@@ -1,12 +1,13 @@
 package me.sailex.rplace.scoreboard;
 
-import me.sailex.rplace.config.LeaderBoard;
+import me.sailex.rplace.leaderboard.LeaderboardManager;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,19 +16,19 @@ import static net.kyori.adventure.text.Component.text;
 public class ScoreBoard {
 
     private Scoreboard scoreboard;
-    private LeaderBoard leaderBoard;
+    private Map<String, Integer> leaderboard;
     private Objective objective;
     private String playedTime;
     private int placedBlocks;
 
-    public ScoreBoard(Player player, String playedTime, int placedBlocks, LeaderBoard leaderBoard) {
+    public ScoreBoard(Player player, String playedTime, int placedBlocks, LeaderboardManager leaderboardManager) {
         this.placedBlocks = placedBlocks;
         this.playedTime = playedTime;
-        this.leaderBoard = leaderBoard;
-        setup(player.getUniqueId());
+        this.leaderboard = leaderboardManager.getLeaderboard();
+        initializeScoreBoard(player.getUniqueId());
     }
 
-    public void setup(UUID uuid) {
+    public void initializeScoreBoard(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
             return;
@@ -48,28 +49,15 @@ public class ScoreBoard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         setLine(10);
-
         setScore("Time played:", 9);
-
-        setPlayedTime(playedTime);
-
+        setupPlayedTime(playedTime);
         setLine(7);
-
         setScore("Blocks placed:", 6);
-
-        setPlacedBlocks(placedBlocks);
-
+        setupPlacedBlocks(placedBlocks);
         setLine(4);
+        setupLeaderBoard(leaderboard);
 
-        setScore("Leaderboard:", 3);
-
-        setScore("1. ", 2);
-
-        setScore("2. ", 1);
-
-        setScore("3. ", 0);
-
-        player.setScoreboard(scoreboard);
+        player.setScoreboard(this.scoreboard);
     }
 
     private void setScore(String content, int score) {
@@ -124,18 +112,30 @@ public class ScoreBoard {
         objective.getScore(name.getEntryName()).setScore(score);
     }
 
-    public void setPlayedTime(String playedTime) {
+    public void setupPlayedTime(String playedTime) {
         setScore("§6" + playedTime, 8);
         this.playedTime = playedTime;
     }
 
-    public void setPlacedBlocks(int placedBlocks) {
+    public void setupPlacedBlocks(int placedBlocks) {
         setScore("§6" + placedBlocks, 5);
         this.placedBlocks = placedBlocks;
     }
 
+    public void setupLeaderBoard(Map<String, Integer> leaderboard) {
+        setScore("Leaderboard:", 3);
+        int index = 0;
+        int place = leaderboard.size();
+        for (Map.Entry<String, Integer> entry : leaderboard.entrySet()) {
+            setScore("§6" + place + ". " + "§f" + entry.getKey() + ", " + "§6" + entry.getValue(), index);
+            index++;
+            place--;
+        }
+        this.leaderboard = leaderboard;
+    }
+
     private void setLine(int score) {
-        setScore("§6" + "-------------", score);
+        setScore("§6" + "---------------", score);
     }
 
     public int getPlacedBlocks() {
