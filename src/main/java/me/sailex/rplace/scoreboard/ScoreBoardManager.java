@@ -1,5 +1,6 @@
 package me.sailex.rplace.scoreboard;
 
+import me.sailex.rplace.leaderboard.LeaderboardManager;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -14,15 +15,15 @@ public class ScoreBoardManager {
         scoreBoardMap = new HashMap<>();
     }
 
-    public ScoreBoard getScoreboard(Player player, String playedTime, int placedBlocks) {
+    public ScoreBoard getScoreboard(Player player, String playedTime, int placedBlocks, LeaderboardManager leaderBoard) {
         UUID uuid = player.getUniqueId();
 
         if (scoreBoardMap.containsKey(uuid)) {
             ScoreBoard scoreBoard = scoreBoardMap.get(uuid);
-            scoreBoard.setup(uuid);
+            scoreBoard.initializeScoreBoard(uuid);
             return scoreBoard;
         }
-        ScoreBoard scoreBoard = new ScoreBoard(player, playedTime, placedBlocks);
+        ScoreBoard scoreBoard = new ScoreBoard(player, playedTime, placedBlocks, leaderBoard);
         scoreBoardMap.put(player.getUniqueId(), scoreBoard);
         return scoreBoard;
     }

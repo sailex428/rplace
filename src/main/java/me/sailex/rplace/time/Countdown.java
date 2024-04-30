@@ -19,7 +19,7 @@ public class Countdown {
     public Countdown(RPlace rPlace, Player player) {
         this.rPlace = rPlace;
         this.player = player;
-        runCountDown(5);
+        runCountDown(4);
     }
 
     public void runCountDown(int newTime) {
@@ -31,7 +31,7 @@ public class Countdown {
                     return;
                 }
                 sendTimerToActionBar();
-                if (time > 0) {
+                if (time >= 0) {
                     time--;
                 }
             }

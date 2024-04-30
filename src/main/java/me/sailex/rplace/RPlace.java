@@ -1,5 +1,7 @@
 package me.sailex.rplace;
 
+import me.sailex.rplace.config.ConfigLoader;
+import me.sailex.rplace.leaderboard.LeaderboardManager;
 import me.sailex.rplace.listener.ListenerManager;
 
 import me.sailex.rplace.materials.MaterialsManager;
@@ -14,21 +16,24 @@ public final class RPlace extends JavaPlugin {
 
     private MaterialsManager materialsManager;
     private RPlacePlayerBuilder rPlacePlayerBuilder;
-
+    private LeaderboardManager leaderboardManager;
     private ScoreBoardManager scoreBoardManager;
 
     @Override
     public void onEnable() {
         RPlace instance = this;
         setupWorld();
-
+        ConfigLoader configLoader = new ConfigLoader("player_data.yml", instance);
         materialsManager = new MaterialsManager(instance);
         scoreBoardManager = new ScoreBoardManager();
+        leaderboardManager = new LeaderboardManager(instance, configLoader);
         rPlacePlayerBuilder = new RPlacePlayerBuilder(
                 instance,
                 scoreBoardManager,
-                new TimerManager(instance)
+                new TimerManager(instance),
+                configLoader
         );
+        leaderboardManager.updateLeaderboard();
 
         new ListenerManager(instance).manageListeners();
     }
@@ -47,7 +52,7 @@ public final class RPlace extends JavaPlugin {
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
             WorldBorder border = world.getWorldBorder();
-            border.setSize(200);
+            border.setSize(400);
             border.setCenter(0.0, 0.0);
         }
     }
@@ -62,6 +67,10 @@ public final class RPlace extends JavaPlugin {
 
     public ScoreBoardManager getScoreBoardManager() {
         return scoreBoardManager;
+    }
+
+    public LeaderboardManager getLeaderboardManager() {
+        return leaderboardManager;
     }
 
 }

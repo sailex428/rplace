@@ -8,7 +8,11 @@ public enum EntryName {
     ENTRY_3(3, "§4"),
     ENTRY_4(4, "§5"),
     ENTRY_5(5, "§6"),
-    ENTRY_6(6, "§7");
+    ENTRY_6(6, "§7"),
+    ENTRY_7(7, "§8"),
+    ENTRY_8(8, "§9"),
+    ENTRY_9(9, "§a"),
+    ENTRY_10(10, "§b");
 
     private final int entry;
     private final String entryName;
