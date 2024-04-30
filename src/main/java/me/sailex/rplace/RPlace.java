@@ -52,7 +52,7 @@ public final class RPlace extends JavaPlugin {
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
             WorldBorder border = world.getWorldBorder();
-            border.setSize(200);
+            border.setSize(400);
             border.setCenter(0.0, 0.0);
         }
     }

@@ -20,7 +20,7 @@ public class LeaderboardManager {
     public LeaderboardManager(RPlace rPlace, ConfigLoader configLoader) {
         this.rPlace = rPlace;
         this.config = configLoader.getFileConfiguration();
-        this.leaderboard = new HashMap<>();
+
         this.leaderboardData = new HashMap<>();
         initializeLeaderboard();
     }
@@ -38,9 +38,9 @@ public class LeaderboardManager {
 
     private void createLeaderboardFromData() {
         this.leaderboard = leaderboardData.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.naturalOrder()))
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(3)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> newValue, LinkedHashMap::new));
     }
 
     public void updateLeaderboard() {

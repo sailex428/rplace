@@ -49,7 +49,7 @@ public class ScoreBoard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         setLine(10);
-        setScore("Time played:", 9);
+        setScore("U+23F0Time played:", 9);
         setupPlayedTime(playedTime);
         setLine(7);
         setScore("Blocks placed:", 6);
@@ -124,12 +124,12 @@ public class ScoreBoard {
 
     public void setupLeaderBoard(Map<String, Integer> leaderboard) {
         setScore("Leaderboard:", 3);
-        int index = 0;
-        int place = leaderboard.size();
+        int index = 2;
+        int place = 1;
         for (Map.Entry<String, Integer> entry : leaderboard.entrySet()) {
-            setScore("§6" + place + ". " + "§f" + entry.getKey() + ", " + "§6" + entry.getValue(), index);
-            index++;
-            place--;
+            setScore("§6" + place  + ". " + "§f" + entry.getKey() + ", " + "§6" + entry.getValue(), index);
+            index--;
+            place++;
         }
         this.leaderboard = leaderboard;
     }
