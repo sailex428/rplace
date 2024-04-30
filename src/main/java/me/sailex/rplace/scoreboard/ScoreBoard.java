@@ -49,7 +49,7 @@ public class ScoreBoard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         setLine(10);
-        setScore("U+23F0Time played:", 9);
+        setScore("Time played:", 9);
         setupPlayedTime(playedTime);
         setLine(7);
         setScore("Blocks placed:", 6);
